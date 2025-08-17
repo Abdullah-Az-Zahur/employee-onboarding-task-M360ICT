@@ -7,6 +7,7 @@ import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
 import PersonalInfoStep from "./steps/PersonalInfoStep";
 import { Form } from "../ui/form";
+import JobDetailsStep from "./steps/JobDetailsStep";
 
 const steps = [
   { id: "personal", title: "Personal Information" },
@@ -51,6 +52,8 @@ export default function MultiStepForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {currentStep === 0 && <PersonalInfoStep />}
+          {currentStep === 1 && <JobDetailsStep />}
+          {/* Add other steps here as needed */}
 
           <div className="flex justify-between">
             {currentStep > 0 && (

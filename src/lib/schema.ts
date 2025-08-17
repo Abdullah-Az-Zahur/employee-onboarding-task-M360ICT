@@ -4,7 +4,7 @@ const phoneRegex = /^\+\d{1,3}-\d{3}-\d{3}-\d{4}$/;
 
 // Step 1: Personal Information Schema
 const personalInfoSchema = z.object({
-  fullname: z
+  fullName: z
     .string()
     .min(1)
     .refine(
@@ -37,6 +37,15 @@ const personalInfoSchema = z.object({
     ),
 });
 
+// Step 2: Job Details Schema
+const jobDetailsSchema = z.object( { 
+
+  
+
+ } )
+
+
 export const formSchema = z.object({
   personalInfo: personalInfoSchema,
+  jobDetails: jobDetailsSchema,
 });

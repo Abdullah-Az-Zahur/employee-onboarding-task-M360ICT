@@ -1,9 +1,10 @@
+import MultiStepForm from "@/components/MultiStepForm";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div>
-      <Button variant="outline">Button</Button>
+      <MultiStepForm />
     </div>
   );
 }

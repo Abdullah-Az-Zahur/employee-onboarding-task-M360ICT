@@ -1,8 +1,8 @@
-import { date, email, z } from "zod";
+import { z } from "zod";
 
 const phoneRegex = /^\+\d{1,3}-\d{3}-\d{3}-\d{4}$/;
 
-// Step 1: Persional Information Schema
+// Step 1: Personal Information Schema
 const personalInfoSchema = z.object({
   fullname: z
     .string()

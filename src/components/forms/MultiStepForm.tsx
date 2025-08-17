@@ -1,10 +1,12 @@
 "use client";
 import { formSchema } from "@/lib/schema";
 import React, { useState } from "react";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Progress } from "./ui/progress";
-import { Button } from "./ui/button";
+import { Progress } from "../ui/progress";
+import { Button } from "../ui/button";
+import PersonalInfoStep from "./steps/PersonalInfoStep";
+import { Form } from "../ui/form";
 
 const steps = [
   { id: "personal", title: "Personal Information" },
@@ -36,7 +38,7 @@ export default function MultiStepForm() {
   const nextStep = async () => {
     const stepId = steps[currentStep].id;
     const isValid = await form.trigger(stepId);
-    if (isValid) setCurrentStep((prev) => prev);
+    if (isValid) setCurrentStep((prev) => prev + 1);
   };
 
   const preStep = () => {
@@ -45,10 +47,11 @@ export default function MultiStepForm() {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h2>Form</h2>
       <Progress value={(currentStep + 1) * 20} className="mb-8" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          {currentStep === 0 && <PersonalInfoStep />}
+
           <div className="flex justify-between">
             {currentStep > 0 && (
               <Button type="button" onClick={preStep}>

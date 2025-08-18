@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { departments, jobTypes, mockManagers } from "@/lib/mockData";
+import { departments, mockManagers } from "@/lib/mockData";
 import React from "react";
 import { useWatch } from "react-hook-form";
 

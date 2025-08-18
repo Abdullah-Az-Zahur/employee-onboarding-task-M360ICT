@@ -123,10 +123,43 @@ const jobDetailsSchema = z
 
 // Step 3: Skills & Preferences
 
+const skillsSchema = z
+  .object({
+    primarySkills: z
+      .array(z.string())
+      .min(3, "Select at least 3 primary skills"),
+
+    experience: z.record(z.string(), z.number().min(0).max(50)),
+
+    workingHours: z.object({
+      start: z.string().regex(/^\d{2}:\d{2}$/, "Invalid time format"),
+      end: z.string().regex(/^\d{2}:\d{2}$/, "Invalid time format"),
+    }),
+
+    remotePreference: z.number().min(0).max(100),
+    managerApproved: z.boolean().optional(),
+    extraNotes: z.string().max(500, "Maximum 500 characters").optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.remotePreference > 50 && !data.managerApproved) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Manager approval is required for remote preference above 50%",
+        path: ["managerApproved"],
+      });
+    }
+  });
+
+
+// Step 4: Emergency Contact Schema
+
 // Main form schema
 export const formSchema = z.object({
   personalInfo: personalInfoSchema,
   jobDetails: jobDetailsSchema,
+  skills: skillsSchema,
+  emergencyContact: emergencyContactSchema,
+  review: reviewSchema,
 });
 
 // Type exports

@@ -121,8 +121,7 @@ const jobDetailsSchema = z
     }
   });
 
-  // Step 3: Skills & Preferences
-
+// Step 3: Skills & Preferences
 
 // Main form schema
 export const formSchema = z.object({

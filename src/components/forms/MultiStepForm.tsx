@@ -1,5 +1,5 @@
 "use client";
-import { formSchema } from "@/lib/schema";
+import { formSchema, FormValues } from "@/lib/schema";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,6 +36,14 @@ export default function MultiStepForm() {
         dob: undefined,
         profilePicture: undefined,
       },
+      jobDetails: {
+        department: undefined,
+        positionTitle: "",
+        startDate: undefined,
+        jobType: undefined,
+        salary: 0,
+        manager: "",
+      },
     },
   });
 
@@ -44,14 +52,14 @@ export default function MultiStepForm() {
   const nextStep = async () => {
     const stepId = steps[currentStep].id;
     const isValid = await form.trigger(stepId as any);
-    if (isValid) setCurrentStep((prev) => prev + 1);
+    if (isValid) setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
   };
 
-  const preStep = () => {
-    setCurrentStep((prev) => prev - 1);
+  const prevStep = () => {
+    setCurrentStep(prev => Math.max(prev - 1, 0));
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormValues) => {
     console.log("Form submitted:", data);
   };
 
@@ -61,11 +69,11 @@ export default function MultiStepForm() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <CurrentStepComponent />
+          <CurrentStepComponent form={form} />
 
           <div className="flex justify-between">
             {currentStep > 0 && (
-              <Button type="button" onClick={preStep}>
+              <Button type="button" onClick={prevStep}>
                 Back
               </Button>
             )}

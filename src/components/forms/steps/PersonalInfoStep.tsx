@@ -7,10 +7,11 @@ import {
 import { Input } from "@/components/ui/input";
 import React from "react";
 
-export default function PersonalInfoStep() {
+export default function PersonalInfoStep({ form }: { form: any }) {
   return (
-    <div>
+    <div className="space-y-4">
       <FormField
+        control={form.control}
         name="personalInfo.fullName"
         render={({ field }) => (
           <FormItem>
@@ -23,6 +24,7 @@ export default function PersonalInfoStep() {
       />
 
       <FormField
+        control={form.control}
         name="personalInfo.email"
         render={({ field }) => (
           <FormItem>
@@ -35,6 +37,7 @@ export default function PersonalInfoStep() {
       />
 
       <FormField
+        control={form.control}
         name="personalInfo.phone"
         render={({ field }) => (
           <FormItem>
@@ -47,6 +50,7 @@ export default function PersonalInfoStep() {
       />
 
       <FormField
+        control={form.control}
         name="personalInfo.dob"
         render={({ field }) => (
           <FormItem>
@@ -63,6 +67,7 @@ export default function PersonalInfoStep() {
       />
 
       <FormField
+        control={form.control}
         name="personalInfo.profilePicture"
         render={({ field }) => (
           <FormItem>

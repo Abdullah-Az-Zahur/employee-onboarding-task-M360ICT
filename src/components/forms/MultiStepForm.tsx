@@ -8,13 +8,20 @@ import { Button } from "../ui/button";
 import PersonalInfoStep from "./steps/PersonalInfoStep";
 import { Form } from "../ui/form";
 import JobDetailsStep from "./steps/JobDetailsStep";
+import SkillsStep from "./steps/SkillsStep";
+import EmergencyContactStep from "./steps/EmergencyContactStep";
+import ReviewStep from "./steps/ReviewStep";
 
 const steps = [
-  { id: "personal", title: "Personal Information" },
-  { id: "job", title: "Job Details" },
-  { id: "skills", title: "Skills & Preferences" },
-  { id: "emergency", title: "Emergency Contact" },
-  { id: "review", title: "Review & Submit" },
+  { id: "personal", title: "Personal Info", component: PersonalInfoStep },
+  { id: "job", title: "Job Details", component: JobDetailsStep },
+  { id: "skills", title: "Skills & Preferences", component: SkillsStep },
+  {
+    id: "emergency",
+    title: "Emergency Contact",
+    component: EmergencyContactStep,
+  },
+  { id: "review", title: "Review & Submit", component: ReviewStep },
 ];
 
 export default function MultiStepForm() {
@@ -23,22 +30,20 @@ export default function MultiStepForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       personalInfo: {
-        fullname: "",
+        fullName: "",
         email: "",
         phone: "",
-        dob: new Date(),
+        dob: undefined,
         profilePicture: undefined,
       },
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-  };
+  const CurrentStepComponent = steps[currentStep].component;
 
   const nextStep = async () => {
     const stepId = steps[currentStep].id;
-    const isValid = await form.trigger(stepId);
+    const isValid = await form.trigger(stepId as any);
     if (isValid) setCurrentStep((prev) => prev + 1);
   };
 
@@ -46,14 +51,17 @@ export default function MultiStepForm() {
     setCurrentStep((prev) => prev - 1);
   };
 
+  const onSubmit = (data: any) => {
+    console.log("Form submitted:", data);
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-6">
       <Progress value={(currentStep + 1) * 20} className="mb-8" />
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {currentStep === 0 && <PersonalInfoStep />}
-          {currentStep === 1 && <JobDetailsStep />}
-          {/* Add other steps here as needed */}
+          <CurrentStepComponent />
 
           <div className="flex justify-between">
             {currentStep > 0 && (

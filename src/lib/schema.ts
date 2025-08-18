@@ -38,12 +38,9 @@ const personalInfoSchema = z.object({
 });
 
 // Step 2: Job Details Schema
-const jobDetailsSchema = z.object( { 
-
-  
-
- } )
-
+const jobDetailsSchema = z.object({
+  department: z.enum(["HR", "Engineering", "Sales", "HR", "Finance"]),
+});
 
 export const formSchema = z.object({
   personalInfo: personalInfoSchema,

@@ -40,7 +40,7 @@ const personalInfoSchema = z.object({
     .refine((val) => val.trim().split(/\s+/).length >= 2, {
       message: "Must contain at least 2 words",
     }),
-  email: z.string().email("Invalid email address"),
+  email: z.email("Invalid email address"),
   phone: phoneSchema,
   dob: z.coerce.date().refine(isAtLeast18, {
     message: "Must be at least 18 years old",
@@ -150,7 +150,6 @@ const skillsSchema = z
     }
   });
 
-
 // Step 4: Emergency Contact Schema
 
 // Main form schema
@@ -158,8 +157,8 @@ export const formSchema = z.object({
   personalInfo: personalInfoSchema,
   jobDetails: jobDetailsSchema,
   skills: skillsSchema,
-  emergencyContact: emergencyContactSchema,
-  review: reviewSchema,
+  // emergencyContact: emergencyContactSchema,
+  // review: reviewSchema,
 });
 
 // Type exports

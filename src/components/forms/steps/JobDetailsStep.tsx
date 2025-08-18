@@ -11,8 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { departments } from "@/lib/mockData";
 import React from "react";
-import { Form } from "react-hook-form";
 
 export default function JobDetailsStep() {
   return (
@@ -30,13 +30,11 @@ export default function JobDetailsStep() {
               </FormControl>
 
               <SelectContent>
-                {["Engineering", "Marketing", "Sales", "HR", "Finance"].map(
-                  (dept) => (
-                    <SelectItem key={dept} value={dept}>
-                      {dept}
-                    </SelectItem>
-                  )
-                )}
+                {departments.map((dept) => (
+                  <SelectItem key={dept} value={dept}>
+                    {dept}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </FormItem>

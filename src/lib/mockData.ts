@@ -78,3 +78,11 @@ export const departments = [
 ] as const;
 
 export const jobTypes = ["Full-time", "Part-time", "Contract"] as const;
+
+export const relationships = [
+  "Spouse",
+  "Parent",
+  "Sibling",
+  "Friend",
+  "Other",
+] as const;

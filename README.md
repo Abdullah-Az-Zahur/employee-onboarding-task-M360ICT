@@ -71,7 +71,7 @@ npm install
 
 ### 3️⃣ Run Development Server
 ```bash
-npm install
+npm run dev
 
 App will be running at:
 👉 http://localhost:3000

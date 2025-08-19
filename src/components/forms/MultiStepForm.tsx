@@ -12,6 +12,8 @@ import SkillsStep from "./steps/SkillsStep";
 import EmergencyContactStep from "./steps/EmergencyContactStep";
 import ReviewStep from "./steps/ReviewStep";
 
+import Swal from "sweetalert2";
+
 const steps = [
   { id: "personal", title: "Personal Info", component: PersonalInfoStep },
   { id: "job", title: "Job Details", component: JobDetailsStep },
@@ -51,23 +53,39 @@ export default function MultiStepForm() {
         remotePreference: 0,
         extraNotes: "",
       },
-      // emergencyContact: {
-      //   contactName: "",
-      //   relationship: undefined,
-      //   phone: "",
-      //   guardianContact: undefined,
-      // },
-      // review: {
-      //   confirmation: false,
-      // },
+      emergencyContact: {
+        contactName: "",
+        relationship: undefined,
+        phone: "",
+        guardianContact: undefined,
+      },
+      review: {
+        
+      },
     },
   });
 
   const CurrentStepComponent = steps[currentStep].component;
 
   const nextStep = async () => {
-    const stepId = steps[currentStep].id;
-    const isValid = await form.trigger(stepId as any);
+    // Map step IDs to form field names
+    const stepToFieldMap: Record<string, keyof FormValues> = {
+      personal: "personalInfo",
+      job: "jobDetails",
+      skills: "skills",
+      emergency: "emergencyContact",
+      review: "review",
+    };
+
+    const currentStepId = steps[currentStep].id;
+    const fieldToValidate = stepToFieldMap[currentStepId];
+
+    if (!fieldToValidate) {
+      console.error("No matching form field for step:", currentStepId);
+      return;
+    }
+
+    const isValid = await form.trigger(fieldToValidate);
     if (isValid) setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   };
 
@@ -75,8 +93,30 @@ export default function MultiStepForm() {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const onSubmit = (data: FormValues) => {
-    console.log("Form submitted:", data);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      console.log("Form submitted:", data);
+
+      await Swal.fire({
+        title: "Success!",
+        text: "Your form has been submitted successfully",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+
+      // Reset form and go back to step 1
+      form.reset();
+      setCurrentStep(0);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      // Show error message
+      await Swal.fire({
+        title: "Error!",
+        text: "There was an error submitting your form",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
   };
 
   return (
@@ -98,7 +138,12 @@ export default function MultiStepForm() {
                 Next
               </Button>
             ) : (
-              <Button type="submit">Submit</Button>
+              <Button
+                type="submit"
+                disabled={!form.watch("review.confirmation")}
+              >
+                Submit
+              </Button>
             )}
           </div>
         </form>

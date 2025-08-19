@@ -3,6 +3,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import React from "react";
@@ -22,6 +23,7 @@ export default function PersonalInfoStep() {
             <FormControl>
               <Input placeholder="Please Enter  Your Full Name" {...field} />
             </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />
@@ -35,6 +37,7 @@ export default function PersonalInfoStep() {
             <FormControl>
               <Input placeholder="Please Enter Your Email" {...field} />
             </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />
@@ -48,6 +51,7 @@ export default function PersonalInfoStep() {
             <FormControl>
               <Input placeholder="Please Enter Your Phone Number" {...field} />
             </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />
@@ -65,6 +69,7 @@ export default function PersonalInfoStep() {
                 {...field}
               />
             </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />
@@ -86,6 +91,7 @@ export default function PersonalInfoStep() {
                 }}
               />
             </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />

@@ -36,6 +36,7 @@ export default function EmergencyContactStep() {
             <FormControl>
               <Input placeholder="Full Name" {...field} />
             </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />

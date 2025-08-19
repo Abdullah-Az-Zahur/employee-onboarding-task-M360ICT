@@ -57,6 +57,7 @@ export default function JobDetailsStep({ form }: { form: any }) {
                 ))}
               </SelectContent>
             </Select>
+            <FormMessage />
           </FormItem>
         )}
       />
@@ -71,6 +72,7 @@ export default function JobDetailsStep({ form }: { form: any }) {
             <FormControl>
               <Input placeholder="Position" {...field} />
             </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />
@@ -85,6 +87,7 @@ export default function JobDetailsStep({ form }: { form: any }) {
             <FormControl>
               <Input type="date" placeholder="YYYY-MM-DD" {...field} />
             </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />
@@ -163,6 +166,7 @@ export default function JobDetailsStep({ form }: { form: any }) {
                 ))}
               </SelectContent>
             </Select>
+            <FormMessage />
           </FormItem>
         )}
       />

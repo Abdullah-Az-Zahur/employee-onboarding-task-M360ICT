@@ -44,6 +44,22 @@ export default function MultiStepForm() {
         salary: 0,
         manager: "",
       },
+      skills: {
+        primarySkills: [],
+        experience: {},
+        workingHours: { start: "09:00", end: "17:00" },
+        remotePreference: 0,
+        extraNotes: "",
+      },
+      // emergencyContact: {
+      //   contactName: "",
+      //   relationship: undefined,
+      //   phone: "",
+      //   guardianContact: undefined,
+      // },
+      // review: {
+      //   confirmation: false,
+      // },
     },
   });
 
@@ -52,11 +68,11 @@ export default function MultiStepForm() {
   const nextStep = async () => {
     const stepId = steps[currentStep].id;
     const isValid = await form.trigger(stepId as any);
-    if (isValid) setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
+    if (isValid) setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   };
 
   const prevStep = () => {
-    setCurrentStep(prev => Math.max(prev - 1, 0));
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
   const onSubmit = (data: FormValues) => {

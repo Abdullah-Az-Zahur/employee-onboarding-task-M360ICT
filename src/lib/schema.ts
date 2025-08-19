@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { departments, jobTypes } from "./mockData";
+import { departments, jobTypes, relationships } from "./mockData";
 
 // Helper functions
 const phoneRegex = /^\+\d{1,3}-\d{3}-\d{3}-\d{4}$/;
@@ -148,17 +148,45 @@ const skillsSchema = z
         path: ["managerApproved"],
       });
     }
+    // Validate end time is after start time
+    if (data.workingHours.start >= data.workingHours.end) {
+      ctx.addIssue({
+        code: "custom",
+        message: "End time must be after start time",
+        path: ["workingHours.end"],
+      });
+    }
   });
 
 // Step 4: Emergency Contact Schema
+const emergencyContactSchema = z.object({
+  contactName: z.string().min(1, "Contact name is required"),
+  relationship: z.enum(relationships, {
+    message: "Please select a relationship",
+  }),
+  phone: phoneSchema,
+  guardianContact: z
+    .object({
+      name: z.string().min(1, "Guardian name is required"),
+      phone: phoneSchema,
+    })
+    .optional(),
+});
+
+// Step 5: Review Schema
+const reviewSchema = z.object({
+  confirmation: z.literal(true, {
+    message: "You must confirm to proceed",
+  }),
+});
 
 // Main form schema
 export const formSchema = z.object({
   personalInfo: personalInfoSchema,
   jobDetails: jobDetailsSchema,
   skills: skillsSchema,
-  // emergencyContact: emergencyContactSchema,
-  // review: reviewSchema,
+  emergencyContact: emergencyContactSchema,
+  review: reviewSchema,
 });
 
 // Type exports

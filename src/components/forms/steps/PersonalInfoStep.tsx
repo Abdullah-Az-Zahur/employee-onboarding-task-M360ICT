@@ -6,8 +6,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import React from "react";
+import { useFormContext } from "react-hook-form";
 
-export default function PersonalInfoStep({ form }: { form: any }) {
+export default function PersonalInfoStep() {
+  const form = useFormContext();
+  
   return (
     <div className="space-y-4">
       <FormField

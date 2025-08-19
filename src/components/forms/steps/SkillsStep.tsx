@@ -34,7 +34,7 @@ export default function SkillsStep() {
       <FormField
         control={form.control}
         name="skills.primarySkills"
-        render={({ field }) => (
+        render={({}) => (
           <FormItem>
             <FormLabel>Primary Skills (Select at least 3)</FormLabel>
             <div className="grid grid-cols-2 gap-4 mt-2">
@@ -74,7 +74,7 @@ export default function SkillsStep() {
       <FormField
         control={form.control}
         name="skills.experience"
-        render={({ field }) => (
+        render={({}) => (
           <FormItem>
             <FormLabel>Experience for Selected Skills (years)</FormLabel>
             <div className="space-y-4 mt-2">

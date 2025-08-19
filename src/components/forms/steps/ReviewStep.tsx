@@ -13,7 +13,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 export default function ReviewStep() {
   const form = useFormContext();
   const formData = form.watch();
-  
 
   return (
     <div className="space-y-6">
@@ -72,28 +71,108 @@ export default function ReviewStep() {
       </div>
 
       {/* Skills & Preferences */}
-      <div className="space-y-2">
+      <div className="space-y-4">
         <h3 className="text-lg font-medium">Skills & Preferences</h3>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-sm text-muted-foreground">Primary Skills</p>
-            <p>{formData.skills.primarySkills.join(", ") || "N/A"}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Primary Skills */}
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-muted-foreground">
+              Primary Skills
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {formData.skills.primarySkills?.length > 0 ? (
+                formData.skills.primarySkills.map((skill: string) => (
+                  <span
+                    key={skill}
+                    className="px-2 py-1 bg-muted rounded-md text-sm"
+                  >
+                    {skill}
+                  </span>
+                ))
+              ) : (
+                <p className="text-sm">N/A</p>
+              )}
+            </div>
           </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Experience</p>
-            <p>{JSON.stringify(formData.skills.experience) || "N/A"}</p>
+
+          {/* Experience */}
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-muted-foreground">
+              Experience
+            </p>
+            {Object.keys(formData.skills.experience || {}).length > 0 ? (
+              <div className="space-y-2">
+                {Object.entries(formData.skills.experience || {}).map(
+                  ([skill, years]) => {
+                    // Assert the type of years
+                    const yearsValue = years as number;
+
+                    return (
+                      <div
+                        key={skill}
+                        className="flex justify-between items-center"
+                      >
+                        <span className="text-sm">{skill}</span>
+                        <span className="text-sm font-medium">
+                          {yearsValue} {yearsValue === 1 ? "year" : "years"}
+                        </span>
+                      </div>
+                    );
+                  }
+                )}
+              </div>
+            ) : (
+              <p className="text-sm">N/A</p>
+            )}
           </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Working Hours</p>
-            <p>
-              {formData.skills.workingHours.start} -{" "}
-              {formData.skills.workingHours.end}
+
+          {/* Working Hours */}
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-muted-foreground">
+              Working Hours
+            </p>
+            <p className="text-sm">
+              {formData.skills.workingHours?.start} -{" "}
+              {formData.skills.workingHours?.end}
             </p>
           </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Remote Preference</p>
-            <p>{formData.skills.remotePreference ? "Yes" : "No"}</p>
+
+          {/* Remote Preference */}
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-muted-foreground">
+              Remote Preference
+            </p>
+            <div className="flex items-center gap-2">
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div
+                  className="bg-blue-600 h-2.5 rounded-full"
+                  style={{ width: `${formData.skills.remotePreference}%` }}
+                ></div>
+              </div>
+              <span className="text-sm font-medium">
+                {formData.skills.remotePreference}%
+              </span>
+            </div>
+            {formData.skills.remotePreference > 50 && (
+              <p className="text-xs text-muted-foreground mt-1">
+                {formData.skills.managerApproved
+                  ? "✓ Manager approved"
+                  : "Manager approval required"}
+              </p>
+            )}
           </div>
+
+          {/* Extra Notes */}
+          {formData.skills.extraNotes && (
+            <div className="md:col-span-2 space-y-1">
+              <p className="text-sm font-medium text-muted-foreground">
+                Additional Notes
+              </p>
+              <p className="text-sm whitespace-pre-line">
+                {formData.skills.extraNotes}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 

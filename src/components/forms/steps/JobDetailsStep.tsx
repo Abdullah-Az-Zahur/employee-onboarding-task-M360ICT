@@ -16,9 +16,10 @@ import {
 } from "@/components/ui/select";
 import { departments, mockManagers } from "@/lib/mockData";
 import React from "react";
-import { useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
-export default function JobDetailsStep({ form }: { form: any }) {
+export default function JobDetailsStep() {
+  const form = useFormContext();
   const department = useWatch({
     control: form.control,
     name: "jobDetails.department",

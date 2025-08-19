@@ -28,6 +28,7 @@ const steps = [
 
 export default function MultiStepForm() {
   const [currentStep, setCurrentStep] = useState(0);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,9 +60,7 @@ export default function MultiStepForm() {
         phone: "",
         guardianContact: undefined,
       },
-      review: {
-        
-      },
+      review: {},
     },
   });
 
@@ -125,7 +124,7 @@ export default function MultiStepForm() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <CurrentStepComponent form={form} />
+          <CurrentStepComponent />
 
           <div className="flex justify-between">
             {currentStep > 0 && (
